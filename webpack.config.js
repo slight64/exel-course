@@ -12,8 +12,9 @@ const jsLoaders = () => {
       loader: 'babel-loader',
       options: {
         'presets': ['@babel/preset-env'],
-      },
-    },
+        'plugins' : ['@babel/plugin-proposal-class-properties']
+      }
+    }
   ]
 
   if (isDev) {
@@ -35,7 +36,7 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, 'src'),
       '@core': path.resolve(__dirname, 'src/core'),
-    },
+    }
   },
   devtool: isDev ? 'source-map': false,
   devServer: {
@@ -49,19 +50,19 @@ module.exports = {
       minify: {
         removeComments: isProd,
         collapseWhiteSpace: isProd,
-      },
+      }
     }),
     new CopyPlugin({
       patterns: [
         {
           from: path.resolve(__dirname, 'src/favicon.ico'),
           to: path.resolve(__dirname, 'dist'),
-        },
-      ],
+        }
+      ]
     }),
     new MiniCssExtractPlugin({
       filename: filename('css'),
-    }),
+    })
   ],
   module: {
     rules: [
@@ -73,18 +74,18 @@ module.exports = {
             options: {
               hmr: isDev,
               reloadAll: true,
-            },
+            }
           },
           'css-loader',
           'sass-loader',
-        ],
+        ]
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: jsLoaders(),
 
-      },
-    ],
-  },
+      }
+    ]
+  }
 };
